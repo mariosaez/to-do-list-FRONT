@@ -1,6 +1,5 @@
 import { Avatar, Box, Button, Container, CssBaseline, Grid, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import CreateIcon from '@mui/icons-material/Create';
 import { Link } from "react-router-dom";
 
 export const Register = () => {
@@ -24,9 +23,6 @@ export const Register = () => {
                     alignItems: "center",
                 }}
             />
-                <Avatar sx={{m: 1, bgcolor: "primary.light"}}>
-                    <CreateIcon />
-                </Avatar>
                 <Typography variant="h5">Register</Typography>
                 <Box sx={{mt: 1}}>
                     <TextField

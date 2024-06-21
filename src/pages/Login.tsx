@@ -1,7 +1,7 @@
 import { Avatar, Box, Button, Container, CssBaseline, Grid, TextField, Typography, Snackbar, Alert } from "@mui/material";
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
-import LoginIcon from '@mui/icons-material/Login';
+
 import {login} from '../api';
 
 export const Login = () => {
@@ -30,6 +30,12 @@ export const Login = () => {
             setSnackbarOpen(true);
         }
     };
+
+    const isFormValid = () => {
+        return username.trim() !== "" && password.trim() !== "";
+    }
+
+
 
     const handleCloseSnackbar = () => {
         setSnackbarOpen(false);
@@ -77,6 +83,7 @@ export const Login = () => {
                         variant="contained"
                         sx={{ mt: 3, mb: 2}}
                         onClick={handleLogin}
+                        disabled={!isFormValid()}
                     >
                         Login
                     </Button>
