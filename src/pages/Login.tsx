@@ -1,3 +1,4 @@
+import { BorderAll } from "@mui/icons-material";
 import { Avatar, Box, Button, Container, CssBaseline, Grid, TextField, Typography, Snackbar, Alert } from "@mui/material";
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
@@ -43,18 +44,26 @@ export const Login = () => {
 
     return (
         <>
-         <Container maxWidth="xs">
+        <Box
+            sx={{
+                display: "flex",
+                alignItems: "center",
+                minHeight: "100vh",
+                backgroundColor: "#f5f5f5",
+            }}
+        >
+         <Container maxWidth="xs" sx={{boxShadow: 6}}>
             <CssBaseline />
             <Box
                 sx={{
-                    mt: 20,
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
+                    p: 2
                 }}
             />
                 <Typography variant="h5">Login</Typography>
-                <Box sx={{ mt: 1}}>
+                <Box sx={{ mt: 1, p: 2}}>
                     <TextField
                         margin="normal"
                         required
@@ -103,6 +112,7 @@ export const Login = () => {
                     </Alert>
                 </Snackbar>
             </Container>
+            </Box>
         </>
     );
 };
