@@ -1,7 +1,7 @@
 import { Avatar, Box, Button, Container, CssBaseline, Grid, TextField, Typography } from "@mui/material";
 import { useState } from "react"
 import { Link } from "react-router-dom";
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import LoginIcon from '@mui/icons-material/Login';
 
 export const Login = () => {
     const [username, setUsername] = useState("");
@@ -22,7 +22,7 @@ export const Login = () => {
                 }}
             />
                 <Avatar sx={{ m: 1, bgcolor: "primary.light"}}>
-                    <LockOutlinedIcon />
+                    <LoginIcon />
                 </Avatar>
                 <Typography variant="h5">Login</Typography>
                 <Box sx={{ mt: 1}}>
@@ -30,7 +30,7 @@ export const Login = () => {
                         margin="normal"
                         required
                         fullWidth
-                        id="email"
+                        id="username"
                         name="username"
                         label="username"
                         autoFocus
@@ -46,8 +46,7 @@ export const Login = () => {
                         label="Password"
                         type="password"
                         value={password}
-                        onChange={(e) => {setPassword(e.target.value);
-                        }}
+                        onChange={(e) => setPassword(e.target.value)}
                     />
 
                     <Button
