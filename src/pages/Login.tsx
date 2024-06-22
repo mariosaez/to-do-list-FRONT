@@ -2,8 +2,9 @@ import { BorderAll } from "@mui/icons-material";
 import { Avatar, Box, Button, Container, CssBaseline, Grid, TextField, Typography, Snackbar, Alert } from "@mui/material";
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
-
+import LoginForm from "../components/LoginForm";
 import {login} from '../api';
+import FormInput from '../components/FormInput';
 
 export const Login = () => {
     const [username, setUsername] = useState("");
@@ -27,93 +28,39 @@ export const Login = () => {
         setSnackbarOpen(true);
     }
 
-    const handleLogin = async () => {
-        try {
-            const response = await login(username, password);
-            navigate('/home');
-        } catch (error: any) {
-            manageErrorResponse(parseInt(error.message));
-        }
-    };
-
-    const isFormValid = () => {
-        return username.trim() !== "" && password.trim() !== "";
-    }
-
     const handleCloseSnackbar = () => {
         setSnackbarOpen(false);
     };
 
     return (
         <>
-        <Box
-            sx={{
-                display: "flex",
-                alignItems: "center",
-                minHeight: "100vh",
-                backgroundColor: "#f5f5f5",
-            }}
-        >
-         <Container maxWidth="xs" sx={{boxShadow: 6}}>
-            <CssBaseline />
             <Box
                 sx={{
                     display: "flex",
-                    flexDirection: "column",
                     alignItems: "center",
-                    p: 2
+                    minHeight: "100vh",
+                    backgroundColor: "#f5f5f5",
                 }}
-            />
-                <Typography variant="h5">Login</Typography>
-                <Box sx={{ mt: 1, p: 2}}>
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="username"
-                        name="username"
-                        label="username"
-                        autoFocus
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+            >
+                <Container maxWidth="xs" sx={{ boxShadow: 6 }}>
+                    <CssBaseline />
+                    <Box
+                        sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            p: 2
+                        }}
                     />
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="password"
-                        name="password"
-                        label="Password"
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                    <LoginForm
+                        onLogin={login}
+                        snackbarOpen={snackbarOpen}
+                        snackbarMessage={snackbarMessage}
+                        snackbarSeverity={snackbarSeverity}
+                        onSnackbarClose={handleCloseSnackbar}
+                        manageErrorResponse={manageErrorResponse}
                     />
-
-                    <Button
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2}}
-                        onClick={handleLogin}
-                        disabled={!isFormValid()}
-                    >
-                        Login
-                    </Button>
-                    <Grid container justifyContent={"flex-end"}>
-                        <Grid item>
-                            <Link to="/register">Don't have an account? Register</Link>
-                        </Grid>
-                    </Grid>
-                </Box>
-                <Snackbar
-                    open={snackbarOpen}
-                    autoHideDuration={6000}
-                    onClose={handleCloseSnackbar}
-                >
-                    <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity} sx={{width: '100%'}}>
-                        {snackbarMessage}
-                    </Alert>
-                </Snackbar>
-            </Container>
+                </Container>
             </Box>
         </>
     );
