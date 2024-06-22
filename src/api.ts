@@ -6,9 +6,8 @@ export const login = async (username: string, password: string): Promise<any> =>
         },
         body: JSON.stringify({username, password}),
     });
-
     if (!response.ok) {
-        throw response;
+      throw new Error(response.status.toString());
     }
 
     return response.json();

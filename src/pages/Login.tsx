@@ -13,30 +13,32 @@ export const Login = () => {
     const [snackbarMessage, setSnackbarMessage] = useState("");
     const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error" | "warning" | "info">("info");
 
+    function manageErrorResponse(status: number) {
+        if (status === 404) {
+            setSnackbarMessage("User not found");
+            setSnackbarSeverity("error");
+        } else if (status === 500) {
+            setSnackbarMessage("Login error");
+            setSnackbarSeverity("error");
+        } else {
+            setSnackbarMessage("An unexpected error occurred");
+            setSnackbarSeverity("error");
+        }
+        setSnackbarOpen(true);
+    }
+
     const handleLogin = async () => {
         try {
-            await login(username, password)
+            const response = await login(username, password);
             navigate('/home');
         } catch (error: any) {
-            if (error.status === 404) {
-                setSnackbarMessage("User not found");
-                setSnackbarSeverity("error");
-            } else if (error.name === "500") {
-                setSnackbarMessage("Login error");
-                setSnackbarSeverity("error");
-            } else {
-                setSnackbarMessage("An unexpected error occurred");
-                setSnackbarSeverity("error");
-            }
-            setSnackbarOpen(true);
+            manageErrorResponse(parseInt(error.message));
         }
     };
 
     const isFormValid = () => {
         return username.trim() !== "" && password.trim() !== "";
     }
-
-
 
     const handleCloseSnackbar = () => {
         setSnackbarOpen(false);
