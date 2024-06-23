@@ -5,9 +5,13 @@ import FormInput from '../components/FormInput';
 import CustomSnackBar from "./CustomSnackbar";
 import { login } from '../api';
 import React from 'react';
+import { isFormValid, manageErrorResponse } from "../utils/formUtils";
 
 interface LoginFormProps{
-    onLogin: (usename: string, password: string) => void;
+    onLogin: (
+        usename: string, 
+        password: string
+        ) => void;
 };
 
 const LoginForm: React.FC<LoginFormProps> = ({
@@ -17,9 +21,8 @@ const LoginForm: React.FC<LoginFormProps> = ({
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = React.useState(false);
     const navigate = useNavigate();
-    const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
-    const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error" | "warning" | "info">("info");
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -32,30 +35,17 @@ const LoginForm: React.FC<LoginFormProps> = ({
             await login(username, password);
             navigate('/home');
         } catch (error: any) {
-            manageErrorResponse(parseInt(error.message));
+            const message = manageErrorResponse(parseInt(error.message));
+            setSnackbarMessage(message);
+            setSnackbarOpen(true);
         }
     };
 
-    function manageErrorResponse(status: number) {
-        if (status === 404) {
-            setSnackbarMessage("User not found");
-            setSnackbarSeverity("error");
-        } else if (status === 500) {
-            setSnackbarMessage("Login error");
-            setSnackbarSeverity("error");
-        } else {
-            setSnackbarMessage("An unexpected error occurred");
-            setSnackbarSeverity("error");
-        }
-        setSnackbarOpen(true);
-    }
+    const fields = [username, password];
+    const isFormValidState = isFormValid(fields);
 
     const handleCloseSnackbar = () => {
         setSnackbarOpen(false);
-    };
-
-    const isFormValid = () => {
-        return username.trim() !== "" && password.trim() !== "";
     };
 
     return (
@@ -84,7 +74,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
                 onClick={handleLogin}
-                disabled={!isFormValid()}
+                disabled={!isFormValidState}
             >
                 Login
             </Button>
@@ -96,9 +86,8 @@ const LoginForm: React.FC<LoginFormProps> = ({
             <CustomSnackBar
                 open={snackbarOpen}
                 autoHideDuration={6000}
-                onClose={handleCloseSnackbar}
-                severity={snackbarSeverity}
                 message={snackbarMessage}
+                onClose={handleCloseSnackbar}
             />
         </Box>
     );

@@ -1,6 +1,8 @@
 import { Avatar, Box, Button, Container, CssBaseline, Grid, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import RegisterForm from "../components/RegisterForm";
+import { register } from "../api";
 
 export const Register = () => {
     const [username, setUsername] = useState("");
@@ -13,91 +15,29 @@ export const Register = () => {
 
     return(
         <>
-        <Container maxWidth="xs">
-            <CssBaseline />
             <Box
                 sx={{
-                    mt: 20,
                     display: "flex",
-                    flexDirection: "column",
                     alignItems: "center",
+                    minHeight: "100vh",
+                    backgroundColor: "#f5f5f5",
                 }}
-            />
-                <Typography variant="h5">Register</Typography>
-                <Box sx={{mt: 1}}>
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="name"
-                        name="name"
-                        label="name"
-                        autoFocus
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+            >
+                <Container maxWidth="xs" sx={{ boxShadow: 6 }}>
+                    <CssBaseline />
+                    <Box
+                        sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            p: 2
+                        }}
                     />
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="surname"
-                        name="surname"
-                        label="surname"
-                        autoFocus
-                        value={surname}
-                        onChange={(e) => setSurname(e.target.value)}
+                    <RegisterForm
+                        onRegister={register}
                     />
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        name="email"
-                        label="email"
-                        type="email"
-                        autoFocus
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="username"
-                        name="username"
-                        label="username"
-                        autoFocus
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="password"
-                        name="password"
-                        label="password"
-                        type="password"
-                        autoFocus
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-
-                    <Button
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2}}
-                        onClick={handleRegister}
-                    >
-                        Register
-                    </Button>
-                    <Grid container justifyContent={"flex-end"}>
-                        <Grid item>
-                        <Link to="/">Return to Login</Link>
-                        </Grid>
-                    </Grid>
-                </Box>
-        </Container>
+                </Container>
+            </Box>
         </>
     );
 };
