@@ -1,31 +1,25 @@
-import { Box, Button, Grid, Typography, Snackbar, Alert } from "@mui/material";
+import { Box, Button, Grid, Typography} from "@mui/material";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import FormInput from '../components/FormInput';
+import CustomSnackBar from "./CustomSnackbar";
 import { login } from '../api';
 import React from 'react';
 
 interface LoginFormProps{
     onLogin: (usename: string, password: string) => void;
-    snackbarOpen: boolean;
-    snackbarMessage: string;
-    snackbarSeverity: "success" | "error" | "warning" | "info";
-    onSnackbarClose: () => void;
-    manageErrorResponse: (status: number) => void;
 };
 
 const LoginForm: React.FC<LoginFormProps> = ({
-  snackbarOpen,
-  snackbarMessage,
-  snackbarSeverity,
-  onSnackbarClose,
-  manageErrorResponse,
   onLogin,
 }) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = React.useState(false);
     const navigate = useNavigate();
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState("");
+    const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error" | "warning" | "info">("info");
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -40,6 +34,24 @@ const LoginForm: React.FC<LoginFormProps> = ({
         } catch (error: any) {
             manageErrorResponse(parseInt(error.message));
         }
+    };
+
+    function manageErrorResponse(status: number) {
+        if (status === 404) {
+            setSnackbarMessage("User not found");
+            setSnackbarSeverity("error");
+        } else if (status === 500) {
+            setSnackbarMessage("Login error");
+            setSnackbarSeverity("error");
+        } else {
+            setSnackbarMessage("An unexpected error occurred");
+            setSnackbarSeverity("error");
+        }
+        setSnackbarOpen(true);
+    }
+
+    const handleCloseSnackbar = () => {
+        setSnackbarOpen(false);
     };
 
     const isFormValid = () => {
@@ -81,15 +93,13 @@ const LoginForm: React.FC<LoginFormProps> = ({
                     <Link to="/register">Don't have an account? Register</Link>
                 </Grid>
             </Grid>
-            <Snackbar
+            <CustomSnackBar
                 open={snackbarOpen}
                 autoHideDuration={6000}
-                onClose={onSnackbarClose}
-            >
-                <Alert onClose={onSnackbarClose} severity={snackbarSeverity} sx={{ width: '100%' }}>
-                    {snackbarMessage}
-                </Alert>
-            </Snackbar>
+                onClose={handleCloseSnackbar}
+                severity={snackbarSeverity}
+                message={snackbarMessage}
+            />
         </Box>
     );
 };
