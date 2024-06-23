@@ -3,9 +3,10 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import FormInput from '../components/FormInput';
 import CustomSnackBar from "./CustomSnackbar";
-import { login } from '../api';
 import React from 'react';
 import { isFormValid, manageErrorResponse } from "../utils/formUtils";
+import { userControllerApi } from "../api";
+import { UserDTO } from '../api/models';
 
 interface LoginFormProps{
     onLogin: (
@@ -23,6 +24,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
     const navigate = useNavigate();
     const [snackbarMessage, setSnackbarMessage] = useState("");
     const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [userData, setUserData] = useState<UserDTO | null>(null);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -32,8 +34,9 @@ const LoginForm: React.FC<LoginFormProps> = ({
 
     const handleLogin = async () => {
         try {
-            await login(username, password);
-            navigate('/home');
+            const response = await userControllerApi.login({ loginRequestDTO: { username, password } });
+            setUserData(response)
+            navigate('/home', {state: {userData: response} });
         } catch (error: any) {
             const message = manageErrorResponse(parseInt(error.message));
             setSnackbarMessage(message);

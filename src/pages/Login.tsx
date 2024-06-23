@@ -1,6 +1,5 @@
 import { Box, Container, CssBaseline} from "@mui/material";
 import LoginForm from "../components/LoginForm";
-import {login} from '../api';
 
 export const Login = () => {
     return (
@@ -24,7 +23,7 @@ export const Login = () => {
                         }}
                     />
                     <LoginForm
-                        onLogin={login}
+                        onLogin={Login}
                     />
                 </Container>
             </Box>

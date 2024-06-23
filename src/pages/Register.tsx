@@ -2,7 +2,6 @@ import { Avatar, Box, Button, Container, CssBaseline, Grid, TextField, Typograph
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import RegisterForm from "../components/RegisterForm";
-import { register } from "../api";
 
 export const Register = () => {
     const [username, setUsername] = useState("");
@@ -34,7 +33,7 @@ export const Register = () => {
                         }}
                     />
                     <RegisterForm
-                        onRegister={register}
+                        onRegister={Register}
                     />
                 </Container>
             </Box>

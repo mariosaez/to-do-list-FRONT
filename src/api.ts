@@ -1,30 +1,10 @@
-export const login = async (username: string, password: string): Promise<any> => {
-    const response = await fetch('http://localhost:8080/api/users/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({username, password}),
-    });
-    if (!response.ok) {
-      throw new Error(response.status.toString());
-    }
+import { UserControllerApi } from "./api/apis";
+import { Configuration } from "./api/runtime";
 
-    return response.json();
-};
+export const API_BASE_URL = "http://localhost:8080";
 
-export const register = async (username: string, password: string, email: string, name: string, surname: string): Promise<any> => {
-    const response = await fetch('http://localhost:8080/api/users/registerUser', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username, password, email, name, surname }),
-    });
-  
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-  
-    return response.json();
-  };
+const configuration = new Configuration({
+    basePath: API_BASE_URL,
+});
+
+export const userControllerApi = new UserControllerApi(configuration);

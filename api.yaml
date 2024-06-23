@@ -1,0 +1,406 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: http://localhost:8080
+    description: Generated server url
+paths:
+  /api/users/updateUser:
+    put:
+      tags:
+        - user-controller
+      operationId: updateUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserDTO'
+  /api/users/updateUserList:
+    put:
+      tags:
+        - user-controller
+      operationId: updateUserList
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/UserDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  type: object
+  /api/tasks/updateTask:
+    put:
+      tags:
+        - task-controller
+      operationId: updateTask
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TaskDTO'
+  /api/users/registerUser:
+    post:
+      tags:
+        - user-controller
+      operationId: registerUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegisterDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserDTO'
+  /api/users/login:
+    post:
+      tags:
+        - user-controller
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequestDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserDTO'
+  /api/tasks/registerTask:
+    post:
+      tags:
+        - task-controller
+      operationId: registerTask
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TaskDTO'
+  /api/users/getUserByUsername/{username}:
+    get:
+      tags:
+        - user-controller
+      operationId: getByusername
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserDTO'
+  /api/users/getUserById/{id}:
+    get:
+      tags:
+        - user-controller
+      operationId: getById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserDTO'
+  /api/users/getUserByEmail/{email}:
+    get:
+      tags:
+        - user-controller
+      operationId: getByEmail
+      parameters:
+        - name: email
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserDTO'
+  /api/users/getAllUsers:
+    get:
+      tags:
+        - user-controller
+      operationId: getAll
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDTO'
+  /api/users/getAllUsersPaginated:
+    get:
+      tags:
+        - user-controller
+      operationId: getAllPaginated
+      parameters:
+        - name: page
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: size
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PagedResponseUserDTO'
+  /api/tasks/getTaskByTitle/{title}:
+    get:
+      tags:
+        - task-controller
+      operationId: getByTitle
+      parameters:
+        - name: title
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TaskDTO'
+  /api/tasks/getTaskById/{id}:
+    get:
+      tags:
+        - task-controller
+      operationId: getTaskById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TaskDTO'
+  /api/tasks/getAllTasks:
+    get:
+      tags:
+        - task-controller
+      operationId: getAll_1
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TaskDTO'
+  /api/tasks/getAllTasksPaginated:
+    get:
+      tags:
+        - task-controller
+      operationId: getAllPaginated_1
+      parameters:
+        - name: page
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: size
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PagedResponseTaskDTO'
+  /api/users/deleteUser:
+    delete:
+      tags:
+        - user-controller
+      operationId: deleteUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+              format: uuid
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserDTO'
+  /api/tasks/deleteTask:
+    delete:
+      tags:
+        - task-controller
+      operationId: deleteTask
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+              format: uuid
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TaskDTO'
+components:
+  schemas:
+    TaskDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        content:
+          type: string
+        state:
+          type: string
+          enum:
+            - CREATED
+            - DOING
+            - DONE
+        userId:
+          type: string
+          format: uuid
+    UserDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+        name:
+          type: string
+        surname:
+          type: string
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaskDTO'
+    UserRegisterDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+        name:
+          type: string
+        surname:
+          type: string
+    LoginRequestDTO:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    PagedResponseUserDTO:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserDTO'
+    PagedResponseTaskDTO:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/TaskDTO'

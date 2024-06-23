@@ -1,0 +1,13 @@
+.openapi-generator-ignore
+apis/TaskControllerApi.ts
+apis/UserControllerApi.ts
+apis/index.ts
+index.ts
+models/LoginRequestDTO.ts
+models/PagedResponseTaskDTO.ts
+models/PagedResponseUserDTO.ts
+models/TaskDTO.ts
+models/UserDTO.ts
+models/UserRegisterDTO.ts
+models/index.ts
+runtime.ts

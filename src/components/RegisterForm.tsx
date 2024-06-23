@@ -1,7 +1,7 @@
 import { Box, Button, Container, CssBaseline, Grid, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { register } from '../api';
+import { userControllerApi } from '../api';
 import { isFormValid, isValidEmail, manageErrorResponse } from '../utils/formUtils';
 import CustomSnackBar from './CustomSnackbar';
 import FormInput from './FormInput';
@@ -42,7 +42,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
             return;
         }
         try {
-            await register(username, password, email, name, surname);
+            await userControllerApi.registerUser({ userRegisterDTO: {username, password, email, name, surname} });
             navigate('/');
         } catch (error: any) {
             const message = manageErrorResponse(parseInt(error.message));
