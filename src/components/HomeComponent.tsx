@@ -17,7 +17,7 @@ const HomeComponent: React.FC<HomeProps> = ({
 
     return (
         <Box sx={{ mt: 1, p: 2 }}>
-            <Typography variant="body1">Welcome, {userData.username}</Typography>
+            <Typography variant="body1">Welcome, {userData.username!}</Typography>
             <Button
                 fullWidth
                 variant="contained"

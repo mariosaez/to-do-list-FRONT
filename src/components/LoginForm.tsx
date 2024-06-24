@@ -1,12 +1,12 @@
 import { Box, Button, Grid, Typography} from "@mui/material";
-import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import FormInput from '../components/FormInput';
 import CustomSnackBar from "./CustomSnackbar";
-import React from 'react';
+import React, {useState} from 'react';
 import { isFormValid, manageErrorResponse } from "../utils/formUtils";
 import { userControllerApi } from "../api";
 import { UserDTO } from '../api/models';
+import { useStore } from "../hooks/useStore";
 
 interface LoginFormProps{
     onLogin: (
@@ -24,7 +24,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
     const navigate = useNavigate();
     const [snackbarMessage, setSnackbarMessage] = useState("");
     const [snackbarOpen, setSnackbarOpen] = useState(false);
-    const [userData, setUserData] = useState<UserDTO | null>(null);
+    const setUserData = useStore((state) => state.setUserData);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -36,7 +36,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
         try {
             const response = await userControllerApi.login({ loginRequestDTO: { username, password } });
             setUserData(response)
-            navigate('/home', {state: {userData: response} });
+            navigate('/home');
         } catch (error: any) {
             const message = manageErrorResponse(parseInt(error.message));
             setSnackbarMessage(message);

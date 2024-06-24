@@ -1,12 +1,10 @@
 import { Box, Container, CssBaseline } from '@mui/material';
 import React from 'react';
-import { useLocation } from 'react-router-dom';
-import { UserDTO } from '../api/models';
 import HomeComponent from '../components/HomeComponent';
+import { useStore } from '../hooks/useStore';
 
 export const Home: React.FC = () => {
-    const location = useLocation();
-    const userData = location.state?.userData as UserDTO;
+    const userData = useStore((state) => state.userData);
     return (
         <>
             <Box
@@ -28,7 +26,7 @@ export const Home: React.FC = () => {
                         }}
                     />
                     <HomeComponent
-                        userData={userData}
+                        userData={userData!}
                     />
                 </Container>
             </Box>
