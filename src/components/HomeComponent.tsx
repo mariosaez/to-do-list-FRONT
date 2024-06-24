@@ -11,19 +11,30 @@ const HomeComponent: React.FC<HomeProps> = ({
 }) => {
     const navigate = useNavigate();
     
-    const handleClick = async () => {
+    const handleClickExit = async () => {
         navigate('/');
     };
 
+    const handleClickProfile = async () => {
+        navigate('/profile');
+    };
+
     return (
-        <Box sx={{ mt: 1, p: 2 }}>
-            <Typography variant="body1">Welcome, {userData.username!}</Typography>
+        <Box sx={{ mt: 1, p: 2, display: 'flex', flexDirection: 'row', gap: 2 }}>
             <Button
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                onClick={handleClick}
-            ></Button>
+                sx={{ flex: 1, mt: 3, mb: 2 }}
+                onClick={handleClickExit}
+            >   Exit
+            </Button>
+            <Button
+                variant="contained"
+                sx={{ flex: 1, mt: 3, mb: 2 }}
+                onClick={handleClickProfile}
+            >
+                Profile
+            </Button>
         </Box>
     );
 };
