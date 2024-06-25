@@ -1,45 +1,30 @@
-import { Avatar, Box, Button, Card, CardContent, colors, List, ListItem, ListItemText, Typography } from "@mui/material";
-import { blueGrey } from "@mui/material/colors";
-import { useNavigate } from "react-router-dom";
-import { UserDTO } from "../api/models";
+import { Avatar, Box, Button, Card, CardContent, List, ListItem, ListItemText } from '@mui/material';
+import React from 'react';
+import { useProfileViewModel } from '../viewModels/ProfileViewModel';
 
-interface ProfileProps{
-    userData: UserDTO;
-};
 
-const ProfileComponent: React.FC<ProfileProps> = ({
-    userData,
-}) => {
-    const navigate = useNavigate();
-    
-    const handleClick = async () => {
-        navigate('/home');
-    };
-
-    const handleClickEdit = async () => {
-        navigate('/editProfile');
-    };
-
+export const ProfileView = () => {
+    const {handleClickEdit, handleClick, userData} = useProfileViewModel();
     return (
         <Card sx={{maxWidth: 400, boxShadow: 3, m: 4, mt: 1 }}>
             <CardContent>
                 <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
                     <Avatar sx={{ width: 60, height: 60}}>
-                        {userData.name!!.charAt(0).toUpperCase()}{userData.surname!!.charAt(0).toUpperCase()}
+                        {userData!!.name!!.charAt(0).toUpperCase()}{userData!!.surname!!.charAt(0).toUpperCase()}
                     </Avatar>
                 </Box>
                 <List>
                     <ListItem>
-                        <ListItemText primary="Name" secondary={userData.name} />
+                        <ListItemText primary="Name" secondary={userData!!.name} />
                     </ListItem>
                     <ListItem>
-                        <ListItemText primary="Surname" secondary={userData.surname} />
+                        <ListItemText primary="Surname" secondary={userData!!.surname} />
                     </ListItem>
                     <ListItem>
-                        <ListItemText primary="Username" secondary={userData.username} />
+                        <ListItemText primary="Username" secondary={userData!!.username} />
                     </ListItem>
                     <ListItem>
-                        <ListItemText primary="Email" secondary={userData.email} />
+                        <ListItemText primary="Email" secondary={userData!!.email} />
                     </ListItem>
                 </List>
                 <Box sx={{ mt: 1, p: 2, display: 'flex', flexDirection: 'row', gap: 2 }}>
@@ -63,4 +48,4 @@ const ProfileComponent: React.FC<ProfileProps> = ({
     );
 };
 
-export default ProfileComponent;
+export default ProfileView;

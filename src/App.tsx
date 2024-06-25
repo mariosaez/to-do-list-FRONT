@@ -1,9 +1,9 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import EditProfile from "./pages/EditProfile";
-import Home from "./pages/Home";
-import { Login } from "./viewModels/Login";
-import Profile from "./pages/Profile";
+import Home from "./viewModels/HomeViewModel";
+import { Login } from "./viewModels/LoginViewModel";
+import Profile from "./views/ProfileView";
 import { Register } from "./pages/Register";
 
 function App() {

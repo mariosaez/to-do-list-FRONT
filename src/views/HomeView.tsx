@@ -1,23 +1,17 @@
 import { Box, Button} from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { UserDTO } from "../api/models";
 
-interface HomeProps{
+interface HomeViewProps{
     userData: UserDTO;
+    handleClickExit: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    handleClickProfile: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
-const HomeComponent: React.FC<HomeProps> = ({
+const HomeView: React.FC<HomeViewProps> = ({
     userData,
+    handleClickExit,
+    handleClickProfile,
 }) => {
-    const navigate = useNavigate();
-    
-    const handleClickExit = async () => {
-        navigate('/');
-    };
-
-    const handleClickProfile = async () => {
-        navigate('/profile');
-    };
 
     return (
         <Box sx={{ mt: 1, p: 2, display: 'flex', flexDirection: 'row', gap: 2 }}>
@@ -39,4 +33,4 @@ const HomeComponent: React.FC<HomeProps> = ({
     );
 };
 
-export default HomeComponent;
+export default HomeView;

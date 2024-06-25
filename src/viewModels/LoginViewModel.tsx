@@ -1,11 +1,10 @@
 import { useState } from "react";
-import LoginForm from "../views/LoginForm";
 import { useStore } from "../hooks/useStore";
 import { useNavigate } from "react-router-dom";
 import { userControllerApi } from "../api";
 import { isFormValid, manageErrorResponse } from "../utils/formUtils";
 
-const Login: React.FC = () => {
+export const useLoginViewModel = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
@@ -46,22 +45,18 @@ const Login: React.FC = () => {
         }
     };
 
-    return (
-        <LoginForm
-            username={username}
-            password={password}
-            showPassword={showPassword}
-            snackbarMessage={snackbarMessage}
-            snackbarOpen={snackbarOpen}
-            onUsernameChange={handleUsernameChange}
-            onPasswordChange={handlePasswordChange}
-            onToggleShowPassword={handleToggleShowPassword}
-            onMouseDownPassword={handleMouseDownPassword}
-            onLogin={handleLogin}
-            onCloseSnackbar={handleCloseSnackbar}
-            isFormValid={isFormValidState}
-        />
-    );
+    return {
+        username,
+        password,
+        showPassword,
+        snackbarMessage,
+        snackbarOpen,
+        handleUsernameChange,
+        handlePasswordChange,
+        handleToggleShowPassword,
+        handleMouseDownPassword,
+        handleLogin,
+        handleCloseSnackbar,
+        isFormValidState
+    };
 };
-
-export default Login;

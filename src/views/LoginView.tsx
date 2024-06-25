@@ -3,37 +3,10 @@ import { Link} from "react-router-dom";
 import FormInput from '../components/FormInput';
 import CustomSnackBar from "../components/CustomSnackbar";
 import React from 'react';
+import { useLoginViewModel } from "../viewModels/LoginViewModel";
 
-interface LoginFormProps {
-    username: string;
-    password: string;
-    showPassword: boolean;
-    snackbarMessage: string;
-    snackbarOpen: boolean;
-    onUsernameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    onPasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    onToggleShowPassword: () => void;
-    onMouseDownPassword: (event: React.MouseEvent<HTMLButtonElement>) => void;
-    onLogin: () => void;
-    onCloseSnackbar: () => void;
-    isFormValid: boolean;
-}
-
-const LoginForm: React.FC<LoginFormProps> = ({
-    username,
-    password,
-    showPassword,
-    snackbarMessage,
-    snackbarOpen,
-    onUsernameChange,
-    onPasswordChange,
-    onToggleShowPassword,
-    onMouseDownPassword,
-    onLogin,
-    onCloseSnackbar,
-    isFormValid,
-}) => {
-
+export const LoginView = () => {
+    const {username, password, showPassword, snackbarMessage, snackbarOpen, handleUsernameChange, handlePasswordChange, handleToggleShowPassword, handleMouseDownPassword, handleLogin, handleCloseSnackbar, isFormValidState} = useLoginViewModel();
     return (
         <Box sx={{ mt: 1, p: 2 }}>
             <Typography variant="h5">Login</Typography>
@@ -42,7 +15,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
                 name="username"
                 label="Username"
                 value={username}
-                onChange={onUsernameChange}
+                onChange={handleUsernameChange}
             />
             <FormInput
                 id="password"
@@ -50,17 +23,17 @@ const LoginForm: React.FC<LoginFormProps> = ({
                 label="Password"
                 type={showPassword ? 'text' : 'password'}
                 value={password}
-                onChange={onPasswordChange}
+                onChange={handlePasswordChange}
                 showPassword={showPassword}
-                handleClickShowPassword={onToggleShowPassword}
-                handleMouseDownPassword={onMouseDownPassword}
+                handleClickShowPassword={handleToggleShowPassword}
+                handleMouseDownPassword={handleMouseDownPassword}
             />
             <Button
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                onClick={onLogin}
-                disabled={!isFormValid}
+                onClick={handleLogin}
+                disabled={!isFormValidState}
             >
                 Login
             </Button>
@@ -73,10 +46,8 @@ const LoginForm: React.FC<LoginFormProps> = ({
                 open={snackbarOpen}
                 autoHideDuration={6000}
                 message={snackbarMessage}
-                onClose={onCloseSnackbar}
+                onClose={handleCloseSnackbar}
             />
         </Box>
     );
 };
-
-export default LoginForm;
