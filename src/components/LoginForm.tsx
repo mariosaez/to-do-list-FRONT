@@ -5,7 +5,6 @@ import CustomSnackBar from "./CustomSnackbar";
 import React, {useState} from 'react';
 import { isFormValid, manageErrorResponse } from "../utils/formUtils";
 import { userControllerApi } from "../api";
-import { UserDTO } from '../api/models';
 import { useStore } from "../hooks/useStore";
 
 interface LoginFormProps{
