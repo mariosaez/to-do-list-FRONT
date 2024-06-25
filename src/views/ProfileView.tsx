@@ -10,21 +10,21 @@ export const ProfileView = () => {
             <CardContent>
                 <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
                     <Avatar sx={{ width: 60, height: 60}}>
-                        {userData!!.name!!.charAt(0).toUpperCase()}{userData!!.surname!!.charAt(0).toUpperCase()}
+                        {userData?.name?.charAt(0).toUpperCase() || ""}{userData?.surname?.charAt(0).toUpperCase() || ""}
                     </Avatar>
                 </Box>
                 <List>
                     <ListItem>
-                        <ListItemText primary="Name" secondary={userData!!.name} />
+                        <ListItemText primary="Name" secondary={userData?.name || ""} />
                     </ListItem>
                     <ListItem>
-                        <ListItemText primary="Surname" secondary={userData!!.surname} />
+                        <ListItemText primary="Surname" secondary={userData?.surname || ""} />
                     </ListItem>
                     <ListItem>
-                        <ListItemText primary="Username" secondary={userData!!.username} />
+                        <ListItemText primary="Username" secondary={userData?.username || ""} />
                     </ListItem>
                     <ListItem>
-                        <ListItemText primary="Email" secondary={userData!!.email} />
+                        <ListItemText primary="Email" secondary={userData?.email || ""} />
                     </ListItem>
                 </List>
                 <Box sx={{ mt: 1, p: 2, display: 'flex', flexDirection: 'row', gap: 2 }}>
@@ -47,5 +47,3 @@ export const ProfileView = () => {
         </Card>
     );
 };
-
-export default ProfileView;

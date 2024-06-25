@@ -39,7 +39,8 @@ export const useLoginViewModel = () => {
             setUserData(response);
             navigate('/home');
         } catch (error: any) {
-            const message = manageErrorResponse(error.response.status);
+            const status = error.response?.status;
+            const message = status ? manageErrorResponse(status) : "An unexpected error occurred";
             setSnackbarMessage(message);
             setSnackbarOpen(true);
         }

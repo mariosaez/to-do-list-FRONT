@@ -11,11 +11,11 @@ export const useEditProfileViewModel = () => {
         userData: state.userData,
         setUserData: state.setUserData
     }));
-    const [name, setName] = useState(userData!.name);
-    const [surname, setSurname] = useState(userData!.surname);
-    const [username, setUsername] = useState(userData!.username);
-    const [email, setEmail] = useState(userData!.email);
-    const [password, setPassword] = useState(userData!.password);
+    const [name, setName] = useState(userData?.name || "");
+    const [surname, setSurname] = useState(userData?.surname || "");
+    const [username, setUsername] = useState(userData?.username || "");
+    const [email, setEmail] = useState(userData?.email || "");
+    const [password, setPassword] = useState(userData?.password || "");
     const [showPassword, setShowPassword] = React.useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
     const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -25,11 +25,11 @@ export const useEditProfileViewModel = () => {
         try {
             const userDTO: UserDTO = {
                 id: userData!.id,
-                name: name,
-                surname: surname,
-                username: username,
-                email: email,
-                password: password
+                name,
+                surname,
+                username,
+                email,
+                password
             };
             const response = await userControllerApi.updateUser({ userDTO });
             setUserData(response)
@@ -45,30 +45,10 @@ export const useEditProfileViewModel = () => {
         setSnackbarOpen(false);
     };
 
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
+    const handleClickShowPassword = () => setShowPassword(!showPassword);
 
     const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-    };
-
-    const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setName(e.target.value);
-    };
-
-    const onChangeSurname = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSurname(e.target.value);
-    };
-
-    const onChangeUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setUsername(e.target.value);
-    };
-
-    const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setEmail(e.target.value);
-    };
-
-    const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPassword(e.target.value);
     };
 
     return {
@@ -81,11 +61,11 @@ export const useEditProfileViewModel = () => {
         snackbarMessage,
         snackbarOpen,
         setUserData,
-        onChangeName,
-        onChangeSurname,
-        onChangeUsername,
-        onChangeEmail,
-        onChangePassword,
+        onChangeName: (e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value),
+        onChangeSurname: (e: React.ChangeEvent<HTMLInputElement>) => setSurname(e.target.value),
+        onChangeUsername: (e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value),
+        onChangeEmail: (e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value),
+        onChangePassword: (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value),
         handleClick,
         handleCloseSnackbar,
         handleClickShowPassword,
