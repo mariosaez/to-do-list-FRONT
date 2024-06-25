@@ -1,18 +1,8 @@
 import { Box, Button} from "@mui/material";
-import { UserDTO } from "../api/models";
+import { useHomeViewModel } from "../viewModels/HomeViewModel";
 
-interface HomeViewProps{
-    userData: UserDTO;
-    handleClickExit: (e: React.MouseEvent<HTMLButtonElement>) => void;
-    handleClickProfile: (e: React.MouseEvent<HTMLButtonElement>) => void;
-};
-
-const HomeView: React.FC<HomeViewProps> = ({
-    userData,
-    handleClickExit,
-    handleClickProfile,
-}) => {
-
+export const HomeView = () => {
+    const {userData, handleClickExit, handleClickProfile} = useHomeViewModel();
     return (
         <Box sx={{ mt: 1, p: 2, display: 'flex', flexDirection: 'row', gap: 2 }}>
             <Button
@@ -32,5 +22,3 @@ const HomeView: React.FC<HomeViewProps> = ({
         </Box>
     );
 };
-
-export default HomeView;

@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import EditProfile from "./pages/EditProfile";
+import EditProfile from "./views/EditProfileView";
 import Home from "./viewModels/HomeViewModel";
 import { Login } from "./viewModels/LoginViewModel";
 import Profile from "./views/ProfileView";
