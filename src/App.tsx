@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import EditProfile from "./pages/EditProfile";
 import Home from "./pages/Home";
-import { Login } from "./pages/Login";
+import { Login } from "./viewModels/Login";
 import Profile from "./pages/Profile";
 import { Register } from "./pages/Register";
 
