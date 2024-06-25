@@ -22,9 +22,7 @@ export const Login = () => {
                             p: 2
                         }}
                     />
-                    <LoginForm
-                        onLogin={Login}
-                    />
+                    <LoginForm/>
                 </Container>
             </Box>
         </>

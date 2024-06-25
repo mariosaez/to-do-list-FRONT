@@ -7,16 +7,8 @@ import { isFormValid, manageErrorResponse } from "../utils/formUtils";
 import { userControllerApi } from "../api";
 import { useStore } from "../hooks/useStore";
 
-interface LoginFormProps{
-    onLogin: (
-        usename: string, 
-        password: string
-        ) => void;
-};
+const LoginForm: React.FC = () => {
 
-const LoginForm: React.FC<LoginFormProps> = ({
-  onLogin,
-}) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = React.useState(false);
