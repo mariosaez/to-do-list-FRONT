@@ -38,7 +38,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
             setUserData(response)
             navigate('/home');
         } catch (error: any) {
-            const message = manageErrorResponse(parseInt(error.message));
+            const message = manageErrorResponse(error.response.status);
             setSnackbarMessage(message);
             setSnackbarOpen(true);
         }

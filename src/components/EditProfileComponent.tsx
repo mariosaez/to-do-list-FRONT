@@ -1,10 +1,9 @@
-import { Avatar, Box, Button, Card, CardContent, colors, List, ListItem, ListItemText, Typography } from "@mui/material";
-import { blueGrey } from "@mui/material/colors";
+import { Box, Button, Typography } from "@mui/material";
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { userControllerApi } from "../api";
-import { TaskDTO, UserDTO } from "../api/models";
+import { UserDTO } from "../api/models";
 import { useStore } from "../hooks/useStore";
 import { manageErrorResponse } from "../utils/formUtils";
 import CustomSnackBar from "./CustomSnackbar";
@@ -65,28 +64,28 @@ const EditProfileComponent: React.FC<EditProfileProps> = ({
                 id="name"
                 name="name"
                 label="Name"
-                value={userData.name!}
+                value={name!}
                 onChange={(e) => setName(e.target.value)}
             />
             <FormInput
                 id="surname"
                 name="surname"
                 label="Surname"
-                value={userData.surname!}
+                value={surname!}
                 onChange={(e) => setSurname(e.target.value)}
             />
             <FormInput
                 id="username"
                 name="username"
                 label="Username"
-                value={userData.username!}
+                value={username!}
                 onChange={(e) => setUsername(e.target.value)}
             />
             <FormInput
                 id="email"
                 name="email"
                 label="Email"
-                value={userData.email!}
+                value={email!}
                 onChange={(e) => setEmail(e.target.value)}
             />
             <FormInput
@@ -94,7 +93,7 @@ const EditProfileComponent: React.FC<EditProfileProps> = ({
                 name="password"
                 label="Password"
                 type={showPassword ? 'text' : 'password'}
-                value={userData.password!}
+                value={password!}
                 onChange={(e) => setPassword(e.target.value)}
                 showPassword={showPassword}
                 handleClickShowPassword={handleClickShowPassword}
