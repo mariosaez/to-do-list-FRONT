@@ -20,14 +20,18 @@ export const useProfileViewModel = () => {
     const [snackbarMessage, setSnackbarMessage] = useState("");
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [isDisabled, setIsDisabled] = useState(true);
-    const [buttonName, setbuttonName] = useState("Edit fields");
+    const [buttonName, setButtonName] = useState("Edit fields");
     const navigate = useNavigate();
     const colors = [
         "#FF5733", "#33FF57", "#3357FF", "#F333FF", "#FF33A1", "#33FFA1",
         "#A133FF", "#FFA133", "#33A1FF", "#FF5733", "#57FF33", "#5733FF",
       ];
+    
+    const handleClickReturn = async () => {
+        navigate('/home');
+    };
 
-      const handleClickSave = async () => {
+    const updateUser = async () => {
         try {
             const userDTO: UserDTO = {
                 id: userData!.id,
@@ -38,42 +42,24 @@ export const useProfileViewModel = () => {
                 password
             };
             const response = await userControllerApi.updateUser({ userDTO });
-            setUserData(response)
-            navigate('/profile');
+            setUserData(response);
+            setSnackbarMessage("Profile updated successfully!");
+            setSnackbarOpen(true);
         } catch (error: any) {
             const message = manageErrorResponse(parseInt(error.message));
             setSnackbarMessage(message);
             setSnackbarOpen(true);
         }
     };
-    
-    const handleClickReturn = async () => {
-        navigate('/home');
-    };
 
     const handleClickEdit = async () => {
-        setIsDisabled(prevState => !prevState);
-        setbuttonName("Save")
-
-        if (buttonName === "Save") {
-            try {
-                const userDTO: UserDTO = {
-                    id: userData!.id,
-                    name,
-                    surname,
-                    username,
-                    email,
-                    password
-                };
-                const response = await userControllerApi.updateUser({ userDTO });
-                setUserData(response)
-                setIsDisabled(true);
-                setbuttonName("Edit fields")
-            } catch (error: any) {
-                const message = manageErrorResponse(parseInt(error.message));
-                setSnackbarMessage(message);
-                setSnackbarOpen(true);
-            }
+        if (isDisabled) {
+            setIsDisabled(false);
+            setButtonName("Save");
+        } else {
+            await updateUser();
+            setIsDisabled(true);
+            setButtonName("Edit fields");
         }
     };
 
