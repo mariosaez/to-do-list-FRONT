@@ -5,7 +5,7 @@ import { useStore } from '../hooks/useStore';
 import { isFormValid, isValidEmail, manageErrorResponse } from '../utils/formUtils';
 
 export const useRegisterViewModel = () => {
-    const { userData, setUserData } = useStore((state) => ({
+    const { setUserData } = useStore((state) => ({
         userData: state.userData,
         setUserData: state.setUserData
     }));
@@ -13,6 +13,7 @@ export const useRegisterViewModel = () => {
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
+    const [surname, setSurname] = useState("");
     const [showPassword, setShowPassword] = React.useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
     const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -31,10 +32,12 @@ export const useRegisterViewModel = () => {
             return;
         }
         try {
-            await userControllerApi.registerUser({ userRegisterDTO: {username, password, email, name, surname} });
+            const response = await userControllerApi.registerUser({ userRegisterDTO: {username, password, email, name, surname} });
+            setUserData(response)
             navigate('/');
         } catch (error: any) {
-            const message = manageErrorResponse(parseInt(error.message));
+            const status = error.response?.status;
+            const message = status ? manageErrorResponse(status) : "An unexpected error occurred";
             setSnackbarMessage(message);
             setSnackbarOpen(true);
         }
@@ -47,12 +50,44 @@ export const useRegisterViewModel = () => {
         setSnackbarOpen(false);
     };
 
+    const handleSetName = (e: React.ChangeEvent<HTMLInputElement> ) => {
+        setName(e.target.value);
+    }
+
+    const handleSetSurname = (e: React.ChangeEvent<HTMLInputElement> ) => {
+        setSurname(e.target.value);
+    }
+
+    const handleSetUsername = (e: React.ChangeEvent<HTMLInputElement> ) => {
+        setUsername(e.target.value);
+    }
+
+    const handleSetEmail = (e: React.ChangeEvent<HTMLInputElement> ) => {
+        setEmail(e.target.value);
+    }
+
+    const handleSetPassword = (e: React.ChangeEvent<HTMLInputElement> ) => {
+        setPassword(e.target.value);
+    }
+
     return {
         handleClickShowPassword,
         handleMouseDownPassword,
         handleRegister,
         isFormValidState,
         handleCloseSnackbar,
-        userData
+        showPassword,
+        snackbarMessage,
+        snackbarOpen,
+        handleSetName,
+        handleSetSurname,
+        handleSetEmail,
+        handleSetUsername,
+        handleSetPassword,
+        name,
+        surname,
+        username,
+        email,
+        password
     };
 };

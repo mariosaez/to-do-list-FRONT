@@ -2,10 +2,14 @@ import { useStore } from '../hooks/useStore';
 import { useNavigate } from 'react-router-dom';
 
 export const useHomeViewModel = () => {
-    const userData = useStore((state) => state.userData);
+    const { userData, setUserData } = useStore((state) => ({
+        userData: state.userData,
+        setUserData: state.setUserData
+    }));
     const navigate = useNavigate();
 
     const handleClickExit = async () => {
+        setUserData(null)
         navigate('/');
     };
 

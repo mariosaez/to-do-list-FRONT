@@ -11,7 +11,19 @@ export const RegisterView = () => {
         handleRegister,
         isFormValidState,
         handleCloseSnackbar,
-        userData
+        showPassword,
+        snackbarMessage,
+        snackbarOpen,
+        handleSetName,
+        handleSetSurname,
+        handleSetEmail,
+        handleSetUsername,
+        handleSetPassword,
+        name,
+        surname,
+        username,
+        email,
+        password
     } = useRegisterViewModel();
     return(
         <Box
@@ -39,28 +51,28 @@ export const RegisterView = () => {
                         name="name"
                         label="name"
                         value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        onChange={handleSetName}
                     />
                     <FormInput
                         id="surname"
                         name="surname"
                         label="surname"
                         value={surname}
-                        onChange={(e) => setSurname(e.target.value)}
+                        onChange={handleSetSurname}
                     />
                     <FormInput
                         id="email"
                         name="email"
                         label="email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={handleSetEmail}
                     />
                     <FormInput
                         id="username"
                         name="username"
                         label="username"
                         value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        onChange={handleSetUsername}
                     />
                     <FormInput
                         id="password"
@@ -68,7 +80,7 @@ export const RegisterView = () => {
                         label="password"
                         type={showPassword ? 'text' : 'password'}
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={handleSetPassword}
                         showPassword={showPassword}
                         handleClickShowPassword={handleClickShowPassword}
                         handleMouseDownPassword={handleMouseDownPassword}
