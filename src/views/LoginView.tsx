@@ -49,6 +49,7 @@ export const LoginView = () => {
         <Box sx={{ mt: 1, p: 2 }}>
           <Typography variant="h5">Login</Typography>
           <FormInput
+            initialDisabled={false}
             id="username"
             name="username"
             label="Username"
@@ -56,6 +57,7 @@ export const LoginView = () => {
             onChange={handleUsernameChange}
           />
           <FormInput
+            initialDisabled={false}
             id="password"
             name="password"
             label="Password"
