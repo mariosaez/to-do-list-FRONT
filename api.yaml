@@ -212,6 +212,27 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/PagedResponseUserDTO'
+  /api/tasks/getTasksByUser/{id}:
+    get:
+      tags:
+        - task-controller
+      operationId: getTaskByUserId
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TaskDTO'
   /api/tasks/getTaskByTitle/{title}:
     get:
       tags:

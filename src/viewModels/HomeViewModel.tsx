@@ -1,5 +1,8 @@
+
 import { useStore } from '../hooks/useStore';
 import { useNavigate } from 'react-router-dom';
+import { manageErrorResponse } from '../utils/formUtils';
+import { taskControllerApi } from '../api';
 
 export const useHomeViewModel = () => {
     const { userData, setUserData } = useStore((state) => ({
@@ -17,9 +20,24 @@ export const useHomeViewModel = () => {
         navigate('/profile');
     };
 
+    const findTasks = async () => {
+        try {
+            const task = await taskControllerApi.getAll1
+            setUserData(response)
+            navigate('/profile');
+        } catch (error: any) {
+            const message = manageErrorResponse(parseInt(error.message));
+            setSnackbarMessage(message);
+            setSnackbarOpen(true);
+        }
+    };
+
+    
+
     return {
         userData,
         handleClickExit,
-        handleClickProfile
+        handleClickProfile,
+        handleDrop
     }
 };
