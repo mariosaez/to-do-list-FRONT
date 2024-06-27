@@ -42,6 +42,10 @@ export interface GetTaskByIdRequest {
     id: string;
 }
 
+export interface GetTaskByUserIdRequest {
+    id: string;
+}
+
 export interface RegisterTaskRequest {
     taskDTO: TaskDTO;
 }
@@ -218,6 +222,37 @@ export class TaskControllerApi extends runtime.BaseAPI {
      */
     async getTaskById(requestParameters: GetTaskByIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TaskDTO> {
         const response = await this.getTaskByIdRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
+    async getTaskByUserIdRaw(requestParameters: GetTaskByUserIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<TaskDTO>>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getTaskByUserId().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/api/tasks/getTasksByUser/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(TaskDTOFromJSON));
+    }
+
+    /**
+     */
+    async getTaskByUserId(requestParameters: GetTaskByUserIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<TaskDTO>> {
+        const response = await this.getTaskByUserIdRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
