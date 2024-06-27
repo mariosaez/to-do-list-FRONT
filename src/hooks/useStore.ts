@@ -1,13 +1,17 @@
 import { create } from "zustand";
-import { UserDTO } from "../api/models";
+import { UserDTO, TaskDTO } from "../api/models";
 
-interface UserState {
+interface StoreState {
     userData: UserDTO | null;
+    taskData: TaskDTO | null;
     setUserData: (data: UserDTO | null) => void;
+    setTaskData: (data: TaskDTO | null) => void,
 }
 
 
-export const useStore = create<UserState>((set) => ({
+export const useStore = create<StoreState>((set) => ({
    userData: null,
+   taskData: null,
    setUserData: (data: UserDTO | null) => set({userData: data}),
+   setTaskData: (data: TaskDTO | null) => set({taskData: data}),
 }));
