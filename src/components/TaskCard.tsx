@@ -17,23 +17,30 @@ export const CardComponent = (props: { task: TaskDTO }) => {
   );
 
   return (
-    <Box sx={{ minWidth: 275 }}>
-      <Card variant="outlined">
-        <CardContent>
-          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-            {task.state} Task
-          </Typography>
-          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-            {task.title} Task
-          </Typography>
-          <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            {task.state}
-          </Typography>
-          <Typography variant="body2">
-            {task.content}
-          </Typography>
-        </CardContent>
-      </Card>
-    </Box>
+    <Card sx={{ backgroundColor: "#f5f5f5", boxShadow: "none" }}>
+      <CardContent>
+        <Typography
+          sx={{
+            fontSize: 14,
+            border: "inset",
+            display: "inline",
+            padding: "2px 4px",
+            backgroundColor: "lightgray",
+          }}
+          color="text.secondary"
+          gutterBottom
+        >
+          {task.state}
+        </Typography>
+        <Typography
+          sx={{ fontSize: 24, mt: 1 }}
+          color="text.secondary"
+          gutterBottom
+        >
+          {task.title}
+        </Typography>
+        <Typography variant="body1">{task.content}</Typography>
+      </CardContent>
+    </Card>
   );
 };
