@@ -1,23 +1,12 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { TaskDTO } from "../api/models";
 
-export const CardComponent = (props: { task: TaskDTO }) => {
-  const { task } = props;
-  const bull = (
-    <Box
-      component="span"
-      sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
-    >
-      •
-    </Box>
-  );
-
+export const CardComponent = (props: { task: TaskDTO, onClick: () => void }) => {
+  const { task, onClick } = props;
   return (
-    <Card sx={{ backgroundColor: "#f5f5f5", boxShadow: "none" }}>
+    <Card sx={{ backgroundColor: "#f5f5f5", boxShadow: "none" }} onClick={onClick}>
       <CardContent>
         <Typography
           sx={{
@@ -39,7 +28,6 @@ export const CardComponent = (props: { task: TaskDTO }) => {
         >
           {task.title}
         </Typography>
-        <Typography variant="body1">{task.content}</Typography>
       </CardContent>
     </Card>
   );

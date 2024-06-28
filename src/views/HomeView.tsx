@@ -4,16 +4,19 @@ import { CardComponent } from "../components/TaskCard";
 import CustomSnackBar from "../components/CustomSnackbar";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { CardModalComponent } from "../components/CardModal";
 
 export const HomeView = () => {
   const {
     userData,
     handleClickExit,
     handleClickProfile,
-    taskList,
     snackbarMessage,
     snackbarOpen,
     handleCloseSnackbar,
+    handleCardClick,
+    handleCloseModal,
+    selectedTask
   } = useHomeViewModel();
   return (
     <Box sx={{ mt: 4, p: 3 }}>
@@ -27,7 +30,7 @@ export const HomeView = () => {
             }}
           >
             <Typography variant="h4" gutterBottom>
-              Home View
+              {userData?.name}
             </Typography>
             <Box>
               <Button
@@ -50,11 +53,15 @@ export const HomeView = () => {
           </Box>
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={3}>
           {userData && userData.tasks && userData.tasks.length > 0 && (
             <Paper elevation={10}>
               {userData.tasks.map((task, index) => (
-                <CardComponent key={index} task={task}/>
+                <CardComponent
+                  key={index}
+                  task={task}
+                  onClick={() => handleCardClick(task)}
+                />
               ))}
             </Paper>
           )}
@@ -67,6 +74,14 @@ export const HomeView = () => {
         message={snackbarMessage}
         onClose={handleCloseSnackbar}
       />
+
+      {selectedTask && (
+        <CardModalComponent
+          task={selectedTask}
+          open={true}
+          handleClose={handleCloseModal}
+        />
+      )}
     </Box>
   );
 };
