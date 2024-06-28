@@ -5,6 +5,10 @@ import CustomSnackBar from "../components/CustomSnackbar";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { CardModalComponent } from "../components/CardModal";
+import { DroppableComponent } from "../components/DroppableComponent";
+import { TaskDTOStateEnum } from "../api/models";
+
+const columns = [TaskDTOStateEnum.Created, TaskDTOStateEnum.Doing, TaskDTOStateEnum.Done];
 
 export const HomeView = () => {
   const {
@@ -17,20 +21,24 @@ export const HomeView = () => {
     handleCardClick,
     handleCloseModal,
     selectedTask,
+    handleDrop,
+    tasks,
   } = useHomeViewModel();
+
   return (
-    <Box sx={{ mt: 4, p: 3 }}>
-      <Grid container spacing={3}>
+    <Box sx={{ mt: 4, p: 3, display: 'flex', flexDirection: 'column' }}>
+      <Grid container spacing={3} sx={{ flex: 1}}>
         <Grid item xs={12}>
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
+              p: 2
             }}
           >
             <Typography variant="h4" gutterBottom>
-              {userData?.name}
+              Bienvenido {userData?.name}!
             </Typography>
             <Box>
               <Button
@@ -65,19 +73,26 @@ export const HomeView = () => {
           </Box>
         </Grid>
 
-        <Grid item xs={3}>
-          {userData && userData.tasks && userData.tasks.length > 0 && (
-            <Paper elevation={10}>
-              {userData.tasks.map((task, index) => (
-                <CardComponent
-                  key={index}
-                  task={task}
-                  onClick={() => handleCardClick(task)}
-                />
-              ))}
-            </Paper>
-          )}
-        </Grid>
+        {columns.map((column) => (
+          <Grid item xs={4} key={column}>
+            <DroppableComponent onDrop={(item) => handleDrop(item, column)}>
+              <Paper elevation={10} sx={{ p: 2, backgroundColor: "#F0F8FF", border: "none" }}>
+                <Typography variant="h6" gutterBottom>
+                  {column}
+                </Typography>
+                {tasks
+                  .filter((task) => task.state === column)
+                  .map((task) => (
+                    <CardComponent
+                      key={task.id}
+                      task={task}
+                      onClick={() => handleCardClick(task)}
+                    />
+                  ))}
+              </Paper>
+            </DroppableComponent>
+          </Grid>
+        ))}
       </Grid>
 
       <CustomSnackBar

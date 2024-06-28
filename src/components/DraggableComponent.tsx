@@ -1,7 +1,7 @@
 import { useDrag } from "react-dnd";
 
-export const DraggableComponent = (props: {id: string, type: string}) => {
-    const {id, type} = props;
+export const DraggableComponent = (props: {id: string, type: string, children: any}) => {
+    const {id, type, children} = props;
     const [{ isDragging }, drag] = useDrag(() => ({
         type: type,
         item: { id },
@@ -19,7 +19,7 @@ export const DraggableComponent = (props: {id: string, type: string}) => {
             cursor: 'move',
           }}
         >
-          Drag Me
+          {children}
         </div>
       );  
 }
