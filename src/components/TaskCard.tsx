@@ -9,19 +9,6 @@ export const CardComponent = (props: { task: TaskDTO, onClick: () => void }) => 
     <Card sx={{ backgroundColor: "#f5f5f5", boxShadow: "none" }} onClick={onClick}>
       <CardContent>
         <Typography
-          sx={{
-            fontSize: 14,
-            border: "inset",
-            display: "inline",
-            padding: "2px 4px",
-            backgroundColor: "lightgray",
-          }}
-          color="text.secondary"
-          gutterBottom
-        >
-          {task.state}
-        </Typography>
-        <Typography
           sx={{ fontSize: 24, mt: 1 }}
           color="text.secondary"
           gutterBottom

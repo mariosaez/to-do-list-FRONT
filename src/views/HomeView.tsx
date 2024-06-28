@@ -16,7 +16,7 @@ export const HomeView = () => {
     handleCloseSnackbar,
     handleCardClick,
     handleCloseModal,
-    selectedTask
+    selectedTask,
   } = useHomeViewModel();
   return (
     <Box sx={{ mt: 4, p: 3 }}>
@@ -36,7 +36,13 @@ export const HomeView = () => {
               <Button
                 variant="contained"
                 startIcon={<ExitToAppIcon />}
-                sx={{ ml: 1 }}
+                sx={{
+                  ml: 1,
+                  bgcolor: "#ff4d4d",
+                  "&:hover": {
+                    bgcolor: "#e60000",
+                  },
+                }}
                 onClick={handleClickExit}
               >
                 Exit
@@ -44,7 +50,13 @@ export const HomeView = () => {
               <Button
                 variant="contained"
                 startIcon={<AccountCircleIcon />}
-                sx={{ ml: 1 }}
+                sx={{
+                  ml: 1,
+                  bgcolor: "#4d79ff",
+                  "&:hover": {
+                    bgcolor: "#005ce6",
+                  },
+                }}
                 onClick={handleClickProfile}
               >
                 Profile
