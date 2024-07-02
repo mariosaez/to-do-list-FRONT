@@ -10,8 +10,15 @@ interface StoreState {
 
 
 export const useStore = create<StoreState>((set) => ({
-   userData: null,
+   userData: JSON.parse(localStorage.getItem('userData') || 'null'),
    taskData: null,
-   setUserData: (data: UserDTO | null) => set({userData: data}),
-   setTaskData: (data: TaskDTO | null) => set({taskData: data}),
+   setUserData: (data: UserDTO | null) => {
+    if (data) {
+        localStorage.setItem('userData', JSON.stringify(data));
+    } else {
+        localStorage.removeItem('userData');
+    }
+    set({ userData: data });
+},
+setTaskData: (data: TaskDTO | null) => set({ taskData: data }),
 }));

@@ -38,24 +38,27 @@ export const useHomeViewModel = () => {
   };
 
   const handleDrop = async (item: TaskDTO, newColumn: TaskDTOStateEnum) => {
-    const taskForUpdate: TaskDTO = {
-      ...item,
-      state: newColumn,
-    };
     try {
-      await taskControllerApi.updateTask({ taskDTO: taskForUpdate });
+      item.state = newColumn;
+      const updatedTask = await taskControllerApi.updateTask({ taskDTO: item });
       setSnackbarMessage(`Task moved to ${newColumn}`);
       setSnackbarOpen(true);
+      const updatedUserData = userData ? { 
+        ...userData, 
+        tasks: userData.tasks!.map(task => task.id === updatedTask.id ? updatedTask : task) 
+      } : null;
+      setUserData(updatedUserData);
+
+      setTasks((prevTasks) =>
+        prevTasks.map((task) =>
+          task.id === item.id ? { ...task, state: newColumn } : task
+        )
+      );
     } catch (error: any) {
       const message = manageErrorResponse(parseInt(error.message));
       setSnackbarMessage(message);
       setSnackbarOpen(true);
     }
-    setTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task.id === item.id ? { ...task, state: newColumn } : task
-      )
-    );
   };
   return {
     userData,
