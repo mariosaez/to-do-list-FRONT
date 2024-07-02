@@ -1,14 +1,15 @@
 import { useDrop } from "react-dnd";
+import { TaskDTO } from "../api/models";
 
 export const DroppableComponent = (props: {
-  onDrop: (item: any) => void;
+  onDrop: (item: TaskDTO) => void;
   children: any;
 }) => {
   const { onDrop, children } = props;
 
   const [{ isOver, canDrop }, drop] = useDrop(() => ({
     accept: "TASK",
-    drop: (item, monitor) => {
+    drop: (item: TaskDTO, monitor) => {
       onDrop(item);
     },
     collect: (monitor) => ({

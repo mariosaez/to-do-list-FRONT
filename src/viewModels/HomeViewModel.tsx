@@ -2,6 +2,8 @@ import { useStore } from "../hooks/useStore";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { TaskDTO, TaskDTOStateEnum } from "../api/models";
+import { taskControllerApi } from "../api";
+import { manageErrorResponse } from "../utils/formUtils";
 
 export const useHomeViewModel = () => {
   const { userData, setUserData } = useStore((state) => ({
@@ -35,14 +37,25 @@ export const useHomeViewModel = () => {
     setSelectedTask(null);
   };
 
-  const handleDrop = (item: any, newColumn: TaskDTOStateEnum) => {
+  const handleDrop = async (item: TaskDTO, newColumn: TaskDTOStateEnum) => {
+    const taskForUpdate: TaskDTO = {
+      ...item,
+      state: newColumn,
+    };
+    try {
+      await taskControllerApi.updateTask({ taskDTO: taskForUpdate });
+      setSnackbarMessage(`Task moved to ${newColumn}`);
+      setSnackbarOpen(true);
+    } catch (error: any) {
+      const message = manageErrorResponse(parseInt(error.message));
+      setSnackbarMessage(message);
+      setSnackbarOpen(true);
+    }
     setTasks((prevTasks) =>
       prevTasks.map((task) =>
         task.id === item.id ? { ...task, state: newColumn } : task
       )
     );
-    setSnackbarMessage(`Task moved to ${newColumn}`);
-    setSnackbarOpen(true);
   };
   return {
     userData,
@@ -55,6 +68,6 @@ export const useHomeViewModel = () => {
     handleCloseModal,
     selectedTask,
     handleDrop,
-    tasks
+    tasks,
   };
 };

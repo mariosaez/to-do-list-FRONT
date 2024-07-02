@@ -1,10 +1,11 @@
 import { useDrag } from "react-dnd";
+import { TaskDTO } from "../api/models";
 
-export const DraggableComponent = (props: {id: string, type: string, children: any}) => {
-    const {id, type, children} = props;
+export const DraggableComponent = (props: {task: TaskDTO, type: string, children: any}) => {
+    const {task, type, children} = props;
     const [, drag] = useDrag(() => ({
         type: type,
-        item: { id },
+        item: { ...task },
         collect: () => ({})
       }));
 
