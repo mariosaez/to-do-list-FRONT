@@ -5,6 +5,7 @@ import { userControllerApi } from "../api";
 import { UserDTO } from "../api/models";
 import { useStore } from "../hooks/useStore";
 import { manageErrorResponse } from "../utils/formUtils";
+import { AlertColor } from "@mui/material";
 
 export const useProfileViewModel = () => {
     const { userData, setUserData } = useStore((state) => ({
@@ -19,6 +20,7 @@ export const useProfileViewModel = () => {
     const [showPassword, setShowPassword] = React.useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
     const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarSeverity, setSnackbarSeverity] = useState<AlertColor>();
     const [isDisabled, setIsDisabled] = useState(true);
     const [buttonName, setButtonName] = useState("Edit fields");
     const navigate = useNavigate();
@@ -45,10 +47,12 @@ export const useProfileViewModel = () => {
             setUserData(response);
             setSnackbarMessage("Profile updated successfully!");
             setSnackbarOpen(true);
+            setSnackbarSeverity("success");
         } catch (error: any) {
             const message = manageErrorResponse(parseInt(error.message));
             setSnackbarMessage(message);
             setSnackbarOpen(true);
+            setSnackbarSeverity("error");
         }
     };
 
@@ -90,6 +94,7 @@ export const useProfileViewModel = () => {
         email,
         showPassword,
         snackbarMessage,
+        snackbarSeverity,
         snackbarOpen,
         setUserData,
         onChangeName: (e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value),

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { TaskDTO, TaskDTOStateEnum } from "../api/models";
 import { taskControllerApi } from "../api";
 import { manageErrorResponse } from "../utils/formUtils";
+import { AlertColor } from "@mui/material";
 
 export const useHomeViewModel = () => {
   const { userData, setUserData } = useStore((state) => ({
@@ -12,6 +13,7 @@ export const useHomeViewModel = () => {
   }));
   const navigate = useNavigate();
   const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState<AlertColor>();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState<TaskDTO | null>(null);
   const [tasks, setTasks] = useState<TaskDTO[]>(userData?.tasks || []);
@@ -43,6 +45,7 @@ export const useHomeViewModel = () => {
       const updatedTask = await taskControllerApi.updateTask({ taskDTO: item });
       setSnackbarMessage(`Task moved to ${newColumn}`);
       setSnackbarOpen(true);
+      setSnackbarSeverity('success');
       const updatedUserData = userData ? { 
         ...userData, 
         tasks: userData.tasks!.map(task => task.id === updatedTask.id ? updatedTask : task) 
@@ -58,6 +61,7 @@ export const useHomeViewModel = () => {
       const message = manageErrorResponse(parseInt(error.message));
       setSnackbarMessage(message);
       setSnackbarOpen(true);
+      setSnackbarSeverity("error");
     }
   };
   return {
@@ -66,6 +70,7 @@ export const useHomeViewModel = () => {
     handleClickProfile,
     snackbarMessage,
     snackbarOpen,
+    snackbarSeverity,
     handleCloseSnackbar,
     handleCardClick,
     handleCloseModal,

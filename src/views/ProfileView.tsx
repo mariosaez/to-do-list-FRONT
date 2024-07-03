@@ -22,6 +22,7 @@ export const ProfileView = () => {
     email,
     showPassword,
     snackbarMessage,
+    snackbarSeverity,
     snackbarOpen,
     handleCloseSnackbar,
     handleClickShowPassword,
@@ -132,6 +133,7 @@ export const ProfileView = () => {
                 open={snackbarOpen}
                 autoHideDuration={6000}
                 message={snackbarMessage}
+                severity={snackbarSeverity ?? 'error'}
                 onClose={handleCloseSnackbar}
               />
             </Box>

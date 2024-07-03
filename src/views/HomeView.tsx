@@ -17,6 +17,7 @@ export const HomeView = () => {
     handleClickProfile,
     snackbarMessage,
     snackbarOpen,
+    snackbarSeverity,
     handleCloseSnackbar,
     handleCardClick,
     handleCloseModal,
@@ -99,6 +100,7 @@ export const HomeView = () => {
         open={snackbarOpen}
         autoHideDuration={6000}
         message={snackbarMessage}
+        severity={snackbarSeverity ?? 'error'}
         onClose={handleCloseSnackbar}
       />
 

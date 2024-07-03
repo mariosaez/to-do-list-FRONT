@@ -3,12 +3,14 @@ import { useStore } from "../hooks/useStore";
 import { useNavigate } from "react-router-dom";
 import { userControllerApi } from "../api";
 import { isFormValid, manageErrorResponse } from "../utils/formUtils";
+import { AlertColor } from "@mui/material";
 
 export const useLoginViewModel = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
+    const [snackbarSeverity, setSnackbarSeverity] = useState<AlertColor>();
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const setUserData = useStore((state) => state.setUserData);
     const navigate = useNavigate();
@@ -43,6 +45,7 @@ export const useLoginViewModel = () => {
             const message = status ? manageErrorResponse(status) : "An unexpected error occurred";
             setSnackbarMessage(message);
             setSnackbarOpen(true);
+            setSnackbarSeverity("error")
         }
     };
 
@@ -52,6 +55,7 @@ export const useLoginViewModel = () => {
         showPassword,
         snackbarMessage,
         snackbarOpen,
+        snackbarSeverity,
         handleUsernameChange,
         handlePasswordChange,
         handleToggleShowPassword,

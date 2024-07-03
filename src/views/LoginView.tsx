@@ -18,6 +18,7 @@ export const LoginView = () => {
     showPassword,
     snackbarMessage,
     snackbarOpen,
+    snackbarSeverity,
     handleUsernameChange,
     handlePasswordChange,
     handleToggleShowPassword,
@@ -86,6 +87,7 @@ export const LoginView = () => {
             open={snackbarOpen}
             autoHideDuration={6000}
             message={snackbarMessage}
+            severity={snackbarSeverity ?? 'error'}
             onClose={handleCloseSnackbar}
           />
         </Box>

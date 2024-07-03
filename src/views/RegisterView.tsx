@@ -21,6 +21,7 @@ export const RegisterView = () => {
     showPassword,
     snackbarMessage,
     snackbarOpen,
+    snackbarSeverity,
     handleSetName,
     handleSetSurname,
     handleSetEmail,
@@ -115,6 +116,7 @@ export const RegisterView = () => {
             open={snackbarOpen}
             autoHideDuration={6000}
             message={snackbarMessage}
+            severity={snackbarSeverity ?? 'error'}
             onClose={handleCloseSnackbar}
           />
         </Box>

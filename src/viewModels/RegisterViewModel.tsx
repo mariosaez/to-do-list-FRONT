@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { userControllerApi } from '../api';
 import { useStore } from '../hooks/useStore';
 import { isFormValid, isValidEmail, manageErrorResponse } from '../utils/formUtils';
+import { AlertColor } from '@mui/material';
 
 export const useRegisterViewModel = () => {
     const { setUserData } = useStore((state) => ({
@@ -17,6 +18,7 @@ export const useRegisterViewModel = () => {
     const [showPassword, setShowPassword] = React.useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
     const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarSeverity, setSnackbarSeverity] = useState<AlertColor>();
     const navigate = useNavigate();
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -29,6 +31,7 @@ export const useRegisterViewModel = () => {
         if (!isValidEmail(email)) {
             setSnackbarMessage("Invalid email format");
             setSnackbarOpen(true);
+            setSnackbarSeverity("error");
             return;
         }
         try {
@@ -40,6 +43,7 @@ export const useRegisterViewModel = () => {
             const message = status ? manageErrorResponse(status) : "An unexpected error occurred";
             setSnackbarMessage(message);
             setSnackbarOpen(true);
+            setSnackbarSeverity("error");
         }
     };
 
@@ -79,6 +83,7 @@ export const useRegisterViewModel = () => {
         showPassword,
         snackbarMessage,
         snackbarOpen,
+        snackbarSeverity,
         handleSetName,
         handleSetSurname,
         handleSetEmail,
